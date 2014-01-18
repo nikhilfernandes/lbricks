@@ -11,6 +11,7 @@ app.get('/play', function(req, res){
 
   cv.readImage("./running.jpg", function(err, mat){    
   var i, r, g, b, v;
+  console.log(mat.size());
   for (i=0; i<mat.length; i+=4) {
     console.log(mat[i])
     r = mat[i];
