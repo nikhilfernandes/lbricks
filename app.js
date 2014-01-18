@@ -14,7 +14,7 @@ app.get('/play', function(req, res){
   , canvas = new Canvas(320, 320)
   , ctx = canvas.getContext('2d')
   , http = require('http');
-  fs.readFile('running.jpg', function(err, squid){
+  fs.readFile('image.gif', function(err, squid){
   if (err) throw err;
   img = new Image;
   img.src = squid;
