@@ -18,10 +18,10 @@ app.get('/play', function(req, res){
   if (err) throw err;
   img = new Image;
   img.src = squid;
-  ctx.drawImage(img, 0, 0, img.width, img.height);
+  ctx.drawImage(img, 0, 0, img.width/4, img.height/4);
   canvas.toDataURL()
 
-  var imgd = ctx.getImageData(0, 0, img.width, img.height);
+  var imgd = ctx.getImageData(0, 0, img.width/4, img.height/4);
   var data = imgd.data;
   console.log(data.length)
   var i, r, g, b, v;
