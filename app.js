@@ -13,7 +13,7 @@ app.get('/play', function(req, res){
   , canvas = new Canvas(200,200)
   , ctx = canvas.getContext('2d');
 
-  cv.readImage("running.jpg", function(err, mat){    
+  cv.readImage("./running.jpg", function(err, mat){    
   var i, r, g, b, v;
   for (i=0; i<mat.length; i+=4) {
     r = mat[i];
