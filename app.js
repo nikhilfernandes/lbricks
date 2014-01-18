@@ -22,14 +22,8 @@ app.get('/play', function(req, res){
     v = 0.2126*r + 0.7152*g + 0.0722*b;
     mat[i] = mat[i+1] = mat[i+2] = v;
   }
-  img = new Image;
-  img.src = mat;
-  ctx.drawImage(img, 0, 0, img.width / 4, img.height / 4);
-  res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(''
-    + '<meta http-equiv="refresh" content="1;" />'
-    + '<img src="' + canvas.toDataURL() + '" />');
-  });
+  mat.save('..public/images/new.jpg');
+  res.send('Hello');
 
   
 
