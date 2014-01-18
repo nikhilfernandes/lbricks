@@ -18,6 +18,7 @@ app.get('/play', function(req, res){
     
     r = mat.get(i,j);
     console.log(r)
+    }
   }
   mat.save('./new.jpg');
   res.send('Hello');
