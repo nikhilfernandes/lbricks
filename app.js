@@ -40,6 +40,36 @@ app.get('/play', function(req, res){
     + '<img src="' + canvas.toDataURL() + '" />');
 });
 
+app.get('/invert', function(req, res){  
+
+  var Canvas = require('canvas'),
+  Image = Canvas.Image
+  , canvas = new Canvas(320, 320)
+  , ctx = canvas.getContext('2d')
+  , http = require('http');
+  fs.readFile('test.gif', function(err, squid){
+  if (err) throw err;
+  img = new Image;
+  img.src = squid;
+  ctx.drawImage(img, 0, 0, img.width/4, img.height/4);
+  canvas.toDataURL()
+
+  var imgd = ctx.getImageData(0, 0, img.width/4, img.height/4);
+  var data = imgd.data;
+  console.log(data.length)
+  for (i=0; i<data.length; i+=4) {
+    data[i] = 255 - data[i];
+    data[i+1] = 255 - data[i+1];
+    data[i+2] = 255 - data[i+2];
+  }
+  
+  ctx.putImageData(imgd, 0, 0);
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+  res.end(''
+    + '<meta http-equiv="refresh" content="1;" />'
+    + '<img src="' + canvas.toDataURL() + '" />');
+});
+  
 
 });
 
