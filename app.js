@@ -22,7 +22,8 @@ app.get('/play', function(req, res){
   canvas.toDataURL()
 
   var imgd = ctx.getImageData(0, 0, img.width, img.height);
-  var data = imgd.data;  
+  var data = imgd.data;
+  console.log(data.length)
   var i, r, g, b, v;
   for (i=0; i<data.length; i+=4) {
     r = data[i];
