@@ -40,6 +40,9 @@ app.get('/play', function(req, res){
     + '<img src="' + canvas.toDataURL() + '" />');
 });
 
+
+});
+
 app.get('/invert', function(req, res){  
 
   var Canvas = require('canvas'),
@@ -68,8 +71,8 @@ app.get('/invert', function(req, res){
   res.end(''
     + '<meta http-equiv="refresh" content="1;" />'
     + '<img src="' + canvas.toDataURL() + '" />');
-});
-  
+
+  });
 
 });
 
