@@ -11,14 +11,13 @@ app.get('/play', function(req, res){
 
   cv.readImage("./running.jpg", function(err, mat){    
   var i, r, g, b, v;
-  console.log(mat.size());
-  for (i=0; i<mat.length; i+=4) {
-    console.log(mat[i])
-    r = mat[i];
-    g = mat[i+1];
-    b = mat[i+2];
-    v = 0.2126*r + 0.7152*g + 0.0722*b;
-    mat[i] = mat[i+1] = mat[i+2] = v;
+  var rows = mat.size()[0];
+  var cols = mat.size()[1];
+  for (i=0; i<rows; i+=1) {
+    for (j=0; j<cols; i+=1) {
+    
+    r = mat.get(i,j);
+    console.log(r)
   }
   mat.save('./new.jpg');
   res.send('Hello');
