@@ -24,6 +24,7 @@ app.get('/play', function(req, res){
   }
   mat.save('..public/images/new.jpg');
   res.send('Hello');
+  });
 
   
 
