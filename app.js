@@ -18,7 +18,7 @@ app.get('/play', function(req, res){
     v = 0.2126*r + 0.7152*g + 0.0722*b;
     mat[i] = mat[i+1] = mat[i+2] = v;
   }
-  mat.save('..public/images/new.jpg');
+  mat.save('./new.jpg');
   res.send('Hello');
   });
 
