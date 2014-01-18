@@ -7,11 +7,7 @@ var app = express();
 
 app.use('/', express.static(__dirname + '/public'));
 
-app.get('/play', function(req, res){
-  var Canvas = require('canvas')
-  , Image = Canvas.Image
-  , canvas = new Canvas(200,200)
-  , ctx = canvas.getContext('2d');
+app.get('/play', function(req, res){  
 
   cv.readImage("./running.jpg", function(err, mat){    
   var i, r, g, b, v;
