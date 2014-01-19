@@ -17,9 +17,38 @@ app.use(express.bodyParser());
 io.sockets.on('connection', function (socket) {    
   
   socket.on('play', function (data) {
-    console.log(data.data)
   var canvas = new Canvas(320, 320);
   var command = data.data;
+  var image = data.image;  
+  if(!_.isUndefined(image)){
+    fs.open(data.filename, 'a', 0755, function(err, fd) {
+      if (err) throw err;
+
+      fs.write(fd, data.image, null, 'Binary', function(err, written, buff) {
+        fs.close(fd, function() {
+            console.log('File saved successful!');
+        });
+      });
+      var commands = command.split('|');
+  var play = _.first(commands);
+  
+  var callback = function(){
+    socket.emit('image-data', { image: canvas.toDataURL() });          
+  }
+  if(play == "play"){
+    commands = _.rest(commands,1);
+    var source = _.first(commands);
+    if(source == "image"){
+      block_filters.Filter(canvas, data.filename, _.rest(commands,1), callback);     
+    }
+  }
+  else{
+
+  }
+    });
+
+
+  }else{
   var commands = command.split('|');
   var play = _.first(commands);
   
@@ -36,50 +65,14 @@ io.sockets.on('connection', function (socket) {
   else{
 
   }
+}
   });
 });
 
 
 
 
-app.get('/binarize', function(req, res){  
 
-  var Canvas = require('canvas'),
-  Image = Canvas.Image
-  , canvas = new Canvas(320, 320)
-  , ctx = canvas.getContext('2d')
-  , http = require('http');
-  fs.readFile('test.gif', function(err, squid){
-  if (err) throw err;
-  img = new Image;
-  img.src = squid;
-  ctx.drawImage(img, 0, 0, img.width/4, img.height/4);
-  canvas.toDataURL()
-
-  var imgd = ctx.getImageData(0, 0, img.width/4, img.height/4);
-  var data = imgd.data;
-  var i, r, g, b, v;
-  for (i=0; i<data.length; i+=4) {
-    r = data[i];
-    g = data[i+1];
-    b = data[i+2];
-    v = 0.2126*r + 0.7152*g + 0.0722*b;
-        if (v > 128) {
-            v = 255;
-        } else {
-            v = 0;
-        }
-    data[i] = data[i+1] = data[i+2] = v;
-  }
-  ctx.putImageData(imgd, 0, 0);
-  res.writeHead(200, { 'Content-Type': 'text/html' });
-  res.end(''
-    + '<meta http-equiv="refresh" content="1;" />'
-    + '<img src="' + canvas.toDataURL() + '" />');
-
-  });
-
-});
 
 app.get('/pixelization', function(req, res){  
 

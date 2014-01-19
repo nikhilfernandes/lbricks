@@ -54,7 +54,7 @@
   <div class="body-area">
     <form class="command-form" action="/play" method="POST">
       <textarea id="commands" class="command" placeholder="play|image|blur">play|image|Binarize</textarea>
-      <input type="file"/>
+      <input type="file" id="imageFile"/>
       <input type="button" id="play-button" value="Play"/>
 
     </form>
@@ -64,7 +64,7 @@
       </div>
       <div id="outputDiv">
         <video id="inputVideoCam" width="640" height="480"></video>
-        <video id="inputVideo" width="640" height="480"></video>
+        <video id="inputVideo" width="640" height="480" autoplay></video>
         <canvas id="outputCanvas" width="640" height="480"></canvas>
       </div>
     </div>
@@ -80,9 +80,24 @@
 <script>
 $(document).ready(function(){
   var socket = io.connect('http://'+location.hostname);
+  var file = null;
+  var reader = null;
+  var result = null;
+  $("#imageFile").on("change", function(e){
+    file = e.originalEvent.target.files[0],
+    reader = new FileReader();
+    result = e.target.result;
+  });
+  
   $("#play-button").on("click", function(){
     var commands = $("#commands").val();
-    console.log(commands)
+    if(reader != null && file != null){
+      reader.onload = function(evt){        
+        socket.emit('play', { data: commands , image: evt.target.result, filename: file.name});      
+      };    
+      reader.readAsBinaryString(file);    
+    }
+    
     socket.emit('play', { data: commands });
   })
   socket.on('image-data', function (data) {
@@ -99,6 +114,40 @@ $(document).ready(function(){
     img.src = data.image;
     
   });
+
+  var convertVideoToJpg = function (stream, canvasElement, ctx) {
+  ctx.drawImage(stream, 0, 0);
+  var picture = canvasElement.toDataURL('image/jpeg');
+  var commands = $("#commands").val();
+  socket.emit('webcam-stream', {picture: picture, commands: commands});
+}
+
+var init = function () {
+  var videoStream = document.getElementById('inputVideoCam');
+  var canvas = document.getElementById('outputCanvas');
+  var ctx = canvas.getContext('2d');
+
+  // output the video data in the source video element
+  var successCallback = function (srm) {
+    videoStream.src = window.webkitURL.createObjectURL(srm);
+  };
+
+  // log error
+  var errorCallback = function (error) {
+    console.log('error: ' + error.msg);
+  };
+
+  // grab the incoming device data
+  window.navigator.webkitGetUserMedia({video: true}, successCallback, errorCallback);
+
+  // send the video data every 250ms
+  setInterval(function () {
+    convertVideoToJpg(videoStream, canvas, ctx);
+  }, 500);
+}
+
+window.onload = init;
+
 });
 </script>
   
