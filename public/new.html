@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/block.css">
+
+  
+	</head>
+	<body>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="./index.html">Vision Blocks</a>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li><a href="./index.html">Home</a></li>
+            <li class="active"><a href="./create.html">Create</a></li>
+            <li><a href="./about.html">About</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">More <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li class="nav-header">Social Networks</li>
+                <li><a href="https://www.facebook.com/visionblocks">VBlocks @ Facebook</a></li>
+                <li><a href="https://twitter.com/visionblocks">VBlocks @ Twitter</a></li>
+                <li><a href="http://visionblocks.wordpress.com/">Our Blog</a></li>
+                <li><a href="https://docs.google.com/document/d/14FwkxR8mT1E8jQ1AHtiwZwIqY9Njy70ODvGMF2Sf6Sk/edit">Feedback @ GDoc</a></li>
+                <li class="divider"></li>
+                <li class="nav-header">Resources</li>
+                <li><a href="https://github.com/clwen/Vision-Blocks">VBlocks @ GitHub</a></li>
+                <li class="divider"></li>
+                <li class="nav-header">Main Contributors</li>
+                <li><a href="http://cameraculture.media.mit.edu">Camera Culture Group</a></li>
+                <li><a href="http://web.media.mit.edu/~raskar/">Ramesh Raskar</a></li>
+                <li><a href="http://web.media.mit.edu/~clwen/">Chunglin Wen</a></li>
+                <li class="divider"></li>
+                <li class="nav-header">Acknowledgement</li>
+                <li><a href="http://www.media.mit.edu/">MIT Media Lab</a></li>
+                <li><a href="http://sertao3d.com/">Erick Passos</a></li>
+                <li><a href="http://hcordeiro.com/">Hugo Cordeiro</a></li>
+                <li><a href="http://scratch.mit.edu/">Inspired by Scratch</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+  <div class="body-area">
+    <form class="command-form" action="/play" method="POST">
+      <textarea id="commands" class="command" placeholder="play|image|blur">play|image|Binarize</textarea>
+      <input type="file"/>
+      <input type="button" id="play-button" value="Play"/>
+
+    </form>
+    <div class="well output-area" style="float:right">
+      <div id="canvas-title">
+        <h5>Output</h5>
+      </div>
+      <div id="outputDiv">
+        <video id="inputVideoCam" width="640" height="480"></video>
+        <video id="inputVideo" width="640" height="480"></video>
+        <canvas id="outputCanvas" width="640" height="480"></canvas>
+      </div>
+    </div>
+  </div>
+  <script src="js/jquery-1.8.3.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/bootstrap-popover.js"></script>
+  <script src="js/drag-and-drop.js"></script>
+  <script src="js/apply-popover.js"></script>    
+  <script src="js/ocanvas-2.1.0.min.js"></script>
+  <script src="js/request.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+<script>
+$(document).ready(function(){
+  var socket = io.connect('http://localhost');
+  $("#play-button").on("click", function(){
+    var commands = $("#commands").val();
+    console.log(commands)
+    socket.emit('play', { data: commands });
+  })
+  socket.on('image-data', function (data) {
+    var canvas = document.getElementById("outputCanvas");
+    var ctx = canvas.getContext('2d');
+    console.log(data.image)
+    
+    var img = new Image();
+    img.onload = function(){
+      ctx.drawImage(img,0,0);
+      imageData = ctx.getImageData(0, 0, data.image.width, data.image.height)
+      
+    }
+    img.src = data.image;
+    
+  });
+});
+</script>
+  
+  </body>
+</html>

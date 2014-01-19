@@ -1,0 +1,87 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install' ]
+2 info using npm@1.3.21
+3 info using node@v0.10.24
+4 verbose readDependencies using package.json deps
+5 verbose install where, deps [ '/Users/activesphere/projects/work/vbblocks',
+5 verbose install   [ 'express', 'canvas', 'opencv', 'socket.io' ] ]
+6 info preinstall vblocks@0.0.1
+7 verbose readDependencies using package.json deps
+8 verbose already installed skipping opencv@0.4 /Users/activesphere/projects/work/vbblocks
+9 verbose already installed skipping express@3.x /Users/activesphere/projects/work/vbblocks
+10 verbose already installed skipping canvas@1.x /Users/activesphere/projects/work/vbblocks
+11 verbose cache add [ 'socket.io@1.0.0', null ]
+12 verbose cache add name=undefined spec="socket.io@1.0.0" args=["socket.io@1.0.0",null]
+13 verbose parsed url { protocol: null,
+13 verbose parsed url   slashes: null,
+13 verbose parsed url   auth: null,
+13 verbose parsed url   host: null,
+13 verbose parsed url   port: null,
+13 verbose parsed url   hostname: null,
+13 verbose parsed url   hash: null,
+13 verbose parsed url   search: null,
+13 verbose parsed url   query: null,
+13 verbose parsed url   pathname: 'socket.io@1.0.0',
+13 verbose parsed url   path: 'socket.io@1.0.0',
+13 verbose parsed url   href: 'socket.io@1.0.0' }
+14 verbose cache add name="socket.io" spec="1.0.0" args=["socket.io","1.0.0"]
+15 verbose parsed url { protocol: null,
+15 verbose parsed url   slashes: null,
+15 verbose parsed url   auth: null,
+15 verbose parsed url   host: null,
+15 verbose parsed url   port: null,
+15 verbose parsed url   hostname: null,
+15 verbose parsed url   hash: null,
+15 verbose parsed url   search: null,
+15 verbose parsed url   query: null,
+15 verbose parsed url   pathname: '1.0.0',
+15 verbose parsed url   path: '1.0.0',
+15 verbose parsed url   href: '1.0.0' }
+16 verbose addNamed [ 'socket.io', '1.0.0' ]
+17 verbose addNamed [ '1.0.0', '1.0.0' ]
+18 silly lockFile 2b4f6516-socket-io-1-0-0 socket.io@1.0.0
+19 verbose lock socket.io@1.0.0 /Users/activesphere/.npm/2b4f6516-socket-io-1-0-0.lock
+20 verbose url raw socket.io/1.0.0
+21 verbose url resolving [ 'https://registry.npmjs.org/', './socket.io/1.0.0' ]
+22 verbose url resolved https://registry.npmjs.org/socket.io/1.0.0
+23 info trying registry request attempt 1 at 03:58:16
+24 http GET https://registry.npmjs.org/socket.io/1.0.0
+25 http 404 https://registry.npmjs.org/socket.io/1.0.0
+26 silly registry.get cb [ 404,
+26 silly registry.get   { date: 'Sun, 19 Jan 2014 22:25:08 GMT',
+26 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R15B03)',
+26 silly registry.get     etag: '"2IGNME1VKBHSVGJV25L685A3M"',
+26 silly registry.get     'content-type': 'application/json',
+26 silly registry.get     'cache-control': 'max-age=0',
+26 silly registry.get     'content-length': '36',
+26 silly registry.get     'accept-ranges': 'bytes',
+26 silly registry.get     via: '1.1 varnish',
+26 silly registry.get     age: '0',
+26 silly registry.get     'x-served-by': 'cache-sv62-SJC3',
+26 silly registry.get     'x-cache': 'MISS',
+26 silly registry.get     'x-cache-hits': '0',
+26 silly registry.get     'x-timer': 'S1390170308.379886389,VS0,VE67',
+26 silly registry.get     vary: 'Accept',
+26 silly registry.get     'keep-alive': 'timeout=10, max=50',
+26 silly registry.get     connection: 'Keep-Alive' } ]
+27 silly lockFile 2b4f6516-socket-io-1-0-0 socket.io@1.0.0
+28 silly lockFile 2b4f6516-socket-io-1-0-0 socket.io@1.0.0
+29 error Error: version not found: 1.0.0 : socket.io/1.0.0
+29 error     at RegClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:275:14)
+29 error     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:123:22)
+29 error     at Request.EventEmitter.emit (events.js:98:17)
+29 error     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:893:14)
+29 error     at Request.EventEmitter.emit (events.js:117:20)
+29 error     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:844:12)
+29 error     at IncomingMessage.EventEmitter.emit (events.js:117:20)
+29 error     at _stream_readable.js:920:16
+29 error     at process._tickCallback (node.js:415:13)
+30 error If you need help, you may report this *entire* log,
+30 error including the npm and node versions, at:
+30 error     <http://github.com/isaacs/npm/issues>
+31 error System Darwin 11.4.2
+32 error command "node" "/usr/local/bin/npm" "install"
+33 error cwd /Users/activesphere/projects/work/vbblocks
+34 error node -v v0.10.24
+35 error npm -v 1.3.21
+36 verbose exit [ 1, true ]

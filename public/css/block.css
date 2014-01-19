@@ -508,7 +508,7 @@ Building blocks v2
 	float: right;
 }
 
-.build-area *:HOVER > .icon-remove-block {
+.build-area .icon-remove-block:hover {
 	float: right;
 	background-position: -312px 0px;
 	margin-top: -4px;

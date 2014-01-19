@@ -7,6 +7,5 @@
     "express": "3.x",
     "canvas": "1.x",
     "opencv": "0.4"
-
   }
 }

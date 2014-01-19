@@ -85,3 +85,15 @@ html, body {
   margin-top: 5px;
   text-align: center;
 }
+
+.command-form{
+  float:left;
+  width: 500px;
+  height: 500px;
+}
+
+textarea.command{
+  width: 500px;
+  height: 100px;
+  float:left;
+}
