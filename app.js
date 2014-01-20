@@ -20,52 +20,38 @@ io.sockets.on('connection', function (socket) {
   var canvas = new Canvas(320, 320);
   var command = data.data;
   var image = data.image;  
+  var callback = function(){
+    socket.emit('image-data', { image: canvas.toDataURL() });          
+  }
+  var commands = command.split('|');
+  var play = _.first(commands);
+  var applFilters = function(filename){
+    if(play == "play"){
+      commands = _.rest(commands,1);
+      var source = _.first(commands);
+      if(source == "image"){
+        block_filters.Filter(canvas, filename, _.rest(commands,1), callback);     
+      }
+    }
+    else{
+    }
+  }
   if(!_.isUndefined(image)){
+    console.log("image");
     fs.open(data.filename, 'a', 0755, function(err, fd) {
       if (err) throw err;
-
       fs.write(fd, data.image, null, 'Binary', function(err, written, buff) {
         fs.close(fd, function() {
             console.log('File saved successful!');
         });
-      });
-      var commands = command.split('|');
-  var play = _.first(commands);
-  
-  var callback = function(){
-    socket.emit('image-data', { image: canvas.toDataURL() });          
-  }
-  if(play == "play"){
-    commands = _.rest(commands,1);
-    var source = _.first(commands);
-    if(source == "image"){
-      block_filters.Filter(canvas, data.filename, _.rest(commands,1), callback);     
-    }
-  }
-  else{
-
-  }
+      });  
+      applFilters(data.filename);  
     });
-
-
   }else{
-  var commands = command.split('|');
-  var play = _.first(commands);
+    console.log("noimage");
+    applFilters("running.jpg");
   
-  var callback = function(){
-    socket.emit('image-data', { image: canvas.toDataURL() });          
   }
-  if(play == "play"){
-    commands = _.rest(commands,1);
-    var source = _.first(commands);
-    if(source == "image"){
-      block_filters.Filter(canvas, "running.jpg", _.rest(commands,1), callback);     
-    }
-  }
-  else{
-
-  }
-}
   });
 });
 

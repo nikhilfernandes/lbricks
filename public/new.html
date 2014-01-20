@@ -83,6 +83,8 @@ $(document).ready(function(){
   var file = null;
   var reader = null;
   var result = null;
+  var canvas = document.getElementById("outputCanvas");
+  var ctx = canvas.getContext('2d');
   $("#imageFile").on("change", function(e){
     file = e.originalEvent.target.files[0],
     reader = new FileReader();
@@ -90,19 +92,22 @@ $(document).ready(function(){
   });
   
   $("#play-button").on("click", function(){
+    canvas.width = canvas.width;
     var commands = $("#commands").val();
+    console.log(reader)
     if(reader != null && file != null){
       reader.onload = function(evt){        
         socket.emit('play', { data: commands , image: evt.target.result, filename: file.name});      
       };    
       reader.readAsBinaryString(file);    
+    }else{
+      socket.emit('play', { data: commands });  
     }
     
-    socket.emit('play', { data: commands });
+    
   })
   socket.on('image-data', function (data) {
-    var canvas = document.getElementById("outputCanvas");
-    var ctx = canvas.getContext('2d');
+    
     console.log(data.image)
     
     var img = new Image();
