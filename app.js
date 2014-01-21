@@ -6,6 +6,7 @@ cv = require('opencv');
 Canvas = require('canvas'),
 _ = require('underscore'),
 block_filters = require('./block_filters');
+paparazzo = require('./paparazzo');
 app = express(),
 server = require('http').createServer(app),
 io = require('socket.io').listen(server);
@@ -66,12 +67,27 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-app.get("/stream", function(req, resp){
-  console.log(req)
-  req.on('data', function(data){
-    console.log(data)
-    superSocket.broadcast.emit("video-data", {image: data, binary:true});
+app.get("/stream", function(req, resp){  
+  p = new paparazzo({host: 'vblocks.media.mit.edu', port: 80, path: '/proxy/foodcam/video.cgi?'})
+  
+
+  p.on("update", function(image){
+    canvas = new Canvas(320, 320);
+    ctx = canvas.getContext('2d');
+    img = new Image;
+    img.src = data;    
+    img.onload = function() { 
+      console.log("image loaded")
+      ctx.drawImage(img, 0, 0);
+      superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
+    };
+   });
+
+  p.on("error", function(error){
+    console.log ("Error: #{error.message}")
   });
+
+  p.start()
 });
 
 app.post("/stream", function(req, resp){
@@ -82,7 +98,8 @@ app.post("/stream", function(req, resp){
     img = new Image;
     img.src = data;    
     img.onload = function() { 
-      ctx.drawImage(img, 0, 0) ;
+      console.log("image loaded")
+      ctx.drawImage(img, 0, 0);
       superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
     }    
     
