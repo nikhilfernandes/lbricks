@@ -75,7 +75,7 @@ app.get("/stream", function(req, resp){
     canvas = new Canvas(320, 320);
     ctx = canvas.getContext('2d');
     img = new Image;
-    img.src = data;    
+    img.src = image;    
     img.onload = function() { 
       console.log("image loaded")
       ctx.drawImage(img, 0, 0);
