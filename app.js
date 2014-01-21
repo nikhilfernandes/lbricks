@@ -70,7 +70,7 @@ app.get("/stream", function(req, resp){
   console.log(req)
   req.on('data', function(data){
     console.log(data)
-    superSocket.broadcast.emit(data, {binary:true});
+    superSocket.broadcast.emit("video-data", {image: data, binary:true});
   });
 });
 
@@ -78,7 +78,7 @@ app.post("/stream", function(req, resp){
   console.log(req)
   req.on('data', function(data){
     console.log(data)
-    superSocket.broadcast.emit("video-data" {image: data, binary:true});
+    superSocket.broadcast.emit("video-data", {image: data, binary:true});
   });
 });
 
