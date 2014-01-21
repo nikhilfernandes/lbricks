@@ -70,21 +70,11 @@ io.sockets.on('connection', function (socket) {
 app.get("/stream", function(req, resp){ 
   Image = Canvas.Image   
   p = new paparazzo({host: '94.86.192.168', port: 80, path: '/mjpg/video.mjpg'})
+  // p = new paparazzo({host: 'vblocks.media.mit.edu', port: 80, path: '/proxy/traffic/nphMotionJpeg'})
   
 
   p.on("update", function(image){    
-    console.log("updated image")
-    updatedImage = ''
-    updatedImage = image;
-    // name = "ik"+Math.random()+".jpg"
-    // fs.open(name, 'w', 0755, function(err, fd) {
-    //   if (err) throw err;
-    //   fs.write(fd, image, null, 'Binary', function(err, written, buff) {
-    //     fs.close(fd, function() {
-    //         console.log('File saved successful!');
-    //     });
-    //   });  
-    // });
+    console.log("update")
     canvas = new Canvas(600, 600);
     ctx = canvas.getContext('2d');
     img1 = new Image;

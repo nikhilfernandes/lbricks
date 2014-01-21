@@ -41,6 +41,7 @@
           });
           return;
         }
+        console.log(response.headers['content-type'])
         emitter.boundary = emitter.boundaryStringFromContentType(response.headers['content-type']);
         this.data = '';
         response.setEncoding('binary');
