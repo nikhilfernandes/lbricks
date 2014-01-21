@@ -121,7 +121,7 @@ $(document).ready(function(){
   });
 
   socket.on('image-data', function (data) {
-    
+    canvas.width = canvas.width;
     console.log(data.image)
     
     var img = new Image();
