@@ -81,7 +81,7 @@ app.post("/stream", function(req, resp){
     ctx = canvas.getContext('2d');
     img = new Image;
     img.src = data;    
-    ctx.drawImage(img, 0, 0, img.width/4, img.height/4);    
+    img.onload = function() { ctx.drawImage(img, 0, 0) }    
     superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
     
     
