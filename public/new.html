@@ -68,6 +68,7 @@
         <canvas id="outputCanvas" width="640" height="480"></canvas>
       </div>
     </div>
+    <img id="camera"/>
   </div>
   <script src="js/jquery-1.8.3.js"></script>
   <script src="js/bootstrap.js"></script>
@@ -113,16 +114,18 @@ $(document).ready(function(){
     var img = new Image();
     img.onload = function(){
       ctx.drawImage(img,0,0);
-      imageData = ctx.getImageData(0, 0, data.image.width, data.image.height)
+      // imageData = ctx.getImageData(0, 0, data.image.width, data.image.height)
       
     }
     img.src = data.image;
     
   });
 
-  socket.on('image-data', function (data) {
+  socket.on('video-data', function (data) {
+    console.log("video")
+    // $('img#camera').attr('src', data.image);
     canvas.width = canvas.width;
-    console.log(data.image)
+    console.log("video")
     
     var img = new Image();
     img.onload = function(){

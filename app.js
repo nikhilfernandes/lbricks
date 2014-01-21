@@ -67,24 +67,38 @@ io.sockets.on('connection', function (socket) {
 });
 
 
-app.get("/stream", function(req, resp){  
-  p = new paparazzo({host: 'vblocks.media.mit.edu', port: 80, path: '/proxy/foodcam/video.cgi?'})
+app.get("/stream", function(req, resp){ 
+  Image = Canvas.Image   
+  p = new paparazzo({host: '94.86.192.168', port: 80, path: '/mjpg/video.mjpg'})
   
 
-  p.on("update", function(image){
+  p.on("update", function(image){    
+    console.log("updated image")
+    updatedImage = ''
+    updatedImage = image;
+    // name = "ik"+Math.random()+".jpg"
+    // fs.open(name, 'w', 0755, function(err, fd) {
+    //   if (err) throw err;
+    //   fs.write(fd, image, null, 'Binary', function(err, written, buff) {
+    //     fs.close(fd, function() {
+    //         console.log('File saved successful!');
+    //     });
+    //   });  
+    // });
     canvas = new Canvas(320, 320);
     ctx = canvas.getContext('2d');
-    img = new Image;
-    img.src = image;    
-    img.onload = function() { 
-      console.log("image loaded")
-      ctx.drawImage(img, 0, 0);
-      superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
-    };
+    img1 = new Image;
+    img1.src = image;        
+    // img1.onload = function() { 
+    //     console.log("image loaded")
+  
+      ctx.drawImage(img1, 0, 0,img.width, img.height);
+      superSocket.broadcast.emit("video-data", {image: image});  
+    // };
    });
 
   p.on("error", function(error){
-    console.log ("Error: #{error.message}")
+    console.log (error.message)
   });
 
   p.start()
@@ -97,13 +111,11 @@ app.post("/stream", function(req, resp){
     ctx = canvas.getContext('2d');
     img = new Image;
     img.src = data;    
-    img.onload = function() { 
+    // img.onload = function() { 
       console.log("image loaded")
-      ctx.drawImage(img, 0, 0);
+      ctx.drawImage(img, 0, 0,img.width, img.height);
       superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
-    }    
-    
-    
+    // }    
     
   });
 });
