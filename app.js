@@ -67,7 +67,9 @@ io.sockets.on('connection', function (socket) {
 
 
 app.get("/stream", function(req, resp){
+  console.log(req)
   req.on('data', function(data){
+    console.log(data)
     superSocket.broadcast(data, {binary:true});
   });
 });
