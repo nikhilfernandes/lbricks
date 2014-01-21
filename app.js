@@ -17,6 +17,12 @@ var superSocket = null;
 
 io.sockets.on('connection', function (socket) {    
   superSocket = socket;
+  var streamHeader = new Buffer(8);
+  streamHeader.write("jsmp");
+  streamHeader.writeUInt16BE(width, 4);
+  streamHeader.writeUInt16BE(height, 6);
+  socket.send(streamHeader, {binary:true});
+
   socket.on('play', function (data) {
   var canvas = new Canvas(320, 320);
   var command = data.data;
@@ -59,7 +65,7 @@ io.sockets.on('connection', function (socket) {
 
 
 app.get("/stream", function(req, resp){
-  request.on('data', function(data){
+  req.on('data', function(data){
     superSocket.broadcast(data, {binary:true});
   });
 });
