@@ -23,7 +23,7 @@ io.sockets.on('connection', function (socket) {
   streamHeader.write("jsmp");
   streamHeader.writeUInt16BE(width, 4);
   streamHeader.writeUInt16BE(height, 6);
-  socket.send(streamHeader, {binary:true});
+  socket.emit(streamHeader, {binary:true});
 
   socket.on('play', function (data) {
   var canvas = new Canvas(320, 320);
