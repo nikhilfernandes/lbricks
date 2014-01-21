@@ -14,6 +14,8 @@ app.use('/', express.static(__dirname + '/public'));
 app.use(express.bodyParser());
 
 var superSocket = null;
+var width = 320;
+var height = 240;
 
 io.sockets.on('connection', function (socket) {    
   superSocket = socket;
