@@ -13,15 +13,17 @@ io = require('socket.io').listen(server);
 app.use('/', express.static(__dirname + '/public'));
 app.use(express.bodyParser());
 
+var superSocket = null;
 
 io.sockets.on('connection', function (socket) {    
-  
+  superSocket = socket;
   socket.on('play', function (data) {
   var canvas = new Canvas(320, 320);
   var command = data.data;
   var image = data.image;  
   var callback = function(){
-    socket.emit('image-data', { image: canvas.toDataURL() });          
+    socket.emit('image-data', { image: canvas.toDataURL() });  
+    socket.broadcast.emit('image-data', { image: canvas.toDataURL() });        
   }
   var commands = command.split('|');
   var play = _.first(commands);
@@ -52,6 +54,13 @@ io.sockets.on('connection', function (socket) {
     applFilters("running.jpg");
   
   }
+  });
+});
+
+
+app.get("/stream", function(req, resp){
+  request.on('data', function(data){
+    superSocket.broadcast(data, {binary:true});
   });
 });
 
