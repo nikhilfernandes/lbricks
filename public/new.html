@@ -120,38 +120,21 @@ $(document).ready(function(){
     
   });
 
-  var convertVideoToJpg = function (stream, canvasElement, ctx) {
-  ctx.drawImage(stream, 0, 0);
-  var picture = canvasElement.toDataURL('image/jpeg');
-  var commands = $("#commands").val();
-  socket.emit('webcam-stream', {picture: picture, commands: commands});
-}
+  socket.on('video-data', function (data) {
+    
+    console.log(data.image)
+    
+    var img = new Image();
+    img.onload = function(){
+      ctx.drawImage(img,0,0);
+      imageData = ctx.getImageData(0, 0, data.image.width, data.image.height)
+      
+    }
+    img.src = data.image;
+    
+  });
 
-var init = function () {
-  var videoStream = document.getElementById('inputVideoCam');
-  var canvas = document.getElementById('outputCanvas');
-  var ctx = canvas.getContext('2d');
-
-  // output the video data in the source video element
-  var successCallback = function (srm) {
-    videoStream.src = window.webkitURL.createObjectURL(srm);
-  };
-
-  // log error
-  var errorCallback = function (error) {
-    console.log('error: ' + error.msg);
-  };
-
-  // grab the incoming device data
-  window.navigator.webkitGetUserMedia({video: true}, successCallback, errorCallback);
-
-  // send the video data every 250ms
-  setInterval(function () {
-    convertVideoToJpg(videoStream, canvas, ctx);
-  }, 500);
-}
-
-window.onload = init;
+  
 
 });
 </script>
