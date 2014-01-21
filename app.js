@@ -92,8 +92,8 @@ app.get("/stream", function(req, resp){
     // img1.onload = function() { 
     //     console.log("image loaded")
   
-      ctx.drawImage(img1, 0, 0,img.width, img.height);
-      superSocket.broadcast.emit("video-data", {image: image});  
+      ctx.drawImage(img1, 0, 0,img1.width, img1.height);
+      superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
     // };
    });
 
