@@ -88,7 +88,7 @@ app.get("/stream", function(req, resp){
     canvas = new Canvas(320, 320);
     ctx = canvas.getContext('2d');
     img1 = new Image;
-    img1.src = image;   
+    img1.src = new Buffer(image, 'binary');   
     try {
     // the synchronous code that we want to catch thrown errors on
      
