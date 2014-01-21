@@ -77,8 +77,12 @@ app.get("/stream", function(req, resp){
 app.post("/stream", function(req, resp){
   console.log(req)
   req.on('data', function(data){
-    console.log(data)
-    superSocket.broadcast.emit("video-data", {image: data, binary:true});
+    canvas = new Canvas(320, 320);
+    ctx = canvas.getContext('2d');
+    img = new Image;
+    img.src = data;
+    ctx.drawImage(img, 0, 0, img.width, img.height);    
+    superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});
   });
 });
 
