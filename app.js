@@ -88,13 +88,18 @@ app.get("/stream", function(req, resp){
     canvas = new Canvas(600, 600);
     ctx = canvas.getContext('2d');
     img1 = new Image;
-    img1.src = image;        
-    // img1.onload = function() { 
-        console.log(image.length)
-  
+    img1.src = image;   
+    try {
+    // the synchronous code that we want to catch thrown errors on
+     
       ctx.drawImage(img1, 0, 0,img1.width, img1.height);
       superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
-    // };
+    
+    } catch (err) {
+      // handle the error safely
+      console.log(err);
+    }     
+    
    });
 
   p.on("error", function(error){
