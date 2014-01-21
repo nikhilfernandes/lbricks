@@ -85,7 +85,7 @@ app.get("/stream", function(req, resp){
     //     });
     //   });  
     // });
-    canvas = new Canvas(320, 320);
+    canvas = new Canvas(600, 600);
     ctx = canvas.getContext('2d');
     img1 = new Image;
     img1.src = new Buffer(image, 'binary');   
