@@ -107,6 +107,9 @@ $(document).ready(function(){
     
     
   })
+  socket.on('ping', function(data){
+      socket.emit('pong', {beat: 1});
+    });
   socket.on('image-data', function (data) {
     canvas.width = canvas.width;
     console.log(data.image)

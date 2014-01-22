@@ -18,7 +18,12 @@ var superSocket = null;
 var width = 320;
 var height = 240;
 
-io.sockets.on('connection', function (socket) {    
+io.sockets.on('connection', function (socket) { 
+  function sendHeartbeat(){
+    setTimeout(sendHeartbeat, 8000);
+    io.sockets.emit('ping', { beat : 1 });
+  }   
+  setTimeout(sendHeartbeat, 8000);
   superSocket = socket;
   var streamHeader = new Buffer(8);
   streamHeader.write("jsmp");
