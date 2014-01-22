@@ -20,10 +20,10 @@ var height = 240;
 
 io.sockets.on('connection', function (socket) { 
   function sendHeartbeat(){
-    setTimeout(sendHeartbeat, 500);
+    setTimeout(sendHeartbeat, 1000);
     io.sockets.emit('ping', { beat : 1 });
   }   
-  setTimeout(sendHeartbeat, 8000);
+  setTimeout(sendHeartbeat, 1000);
   superSocket = socket;
   var streamHeader = new Buffer(8);
   streamHeader.write("jsmp");
