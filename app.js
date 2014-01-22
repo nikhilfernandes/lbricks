@@ -20,7 +20,7 @@ var height = 240;
 
 io.sockets.on('connection', function (socket) { 
   function sendHeartbeat(){
-    setTimeout(sendHeartbeat, 8000);
+    setTimeout(sendHeartbeat, 500);
     io.sockets.emit('ping', { beat : 1 });
   }   
   setTimeout(sendHeartbeat, 8000);
@@ -88,7 +88,10 @@ app.get("/stream", function(req, resp){
     // the synchronous code that we want to catch thrown errors on
      
       ctx.drawImage(img1, 0, 0,img1.width, img1.height);
-      // superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
+      canvas.toDataURL(function(err, str){
+        superSocket.broadcast.emit("video-data", {image: str});    
+      })
+      
     
     } catch (err) {
       // handle the error safely
