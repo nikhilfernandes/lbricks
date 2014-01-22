@@ -93,7 +93,7 @@ app.get("/stream", function(req, resp){
    });
 
   p.on("error", function(error){
-    console.log (error.message)
+    console.log ("error")
   });
 
   p.start()
