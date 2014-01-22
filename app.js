@@ -87,7 +87,7 @@ app.get("/stream", function(req, resp){
     
     } catch (err) {
       // handle the error safely
-      console.log(err);
+      console.log("error");
     }     
     
    });
