@@ -9,7 +9,7 @@ block_filters = require('./block_filters');
 paparazzo = require('./paparazzo');
 app = express(),
 server = require('http').createServer(app),
-io = require('socket.io').listen(server);
+io = require('socket.io').listen(server, { log: false });
 
 app.use('/', express.static(__dirname + '/public'));
 app.use(express.bodyParser());
