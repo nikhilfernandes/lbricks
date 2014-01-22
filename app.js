@@ -88,7 +88,7 @@ app.get("/stream", function(req, resp){
     // the synchronous code that we want to catch thrown errors on
      
       ctx.drawImage(img1, 0, 0,img1.width, img1.height);
-      superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
+      // superSocket.broadcast.emit("video-data", {image: canvas.toDataURL()});  
     
     } catch (err) {
       // handle the error safely
